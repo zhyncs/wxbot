@@ -1,0 +1,20 @@
+name: 'Weather Bot'
+
+on:
+  schedule:
+    - cron: '25 0 * * *'
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout code'
+        uses: actions/checkout@v1
+      - name: 'Push Weather'
+        env:
+          APP_KEY: ${{ secrets.APP_KEY }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+        run: |
+          sudo apt install jq -y
+          bash ./wx.sh
